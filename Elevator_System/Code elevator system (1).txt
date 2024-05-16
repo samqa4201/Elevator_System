@@ -1,0 +1,194 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit; // Import TimeUnit for time-related operations
+
+// Enum representing the direction of the elevator
+enum Direction {
+    UP, DOWN, NONE
+}
+
+// Class representing a floor in the building
+class Floor {
+    private int floorNumber;
+
+    public Floor(int floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public int getFloorNumber() {
+        return floorNumber;
+    }
+}
+
+// Class representing a passenger in the elevator
+class Passenger {
+    private int destinationFloor;
+
+    public Passenger(int destinationFloor) {
+        this.destinationFloor = destinationFloor;
+    }
+
+    public int getDestinationFloor() {
+        return destinationFloor;
+    }
+}
+
+// Class representing the elevator
+class Elevator {
+    private int currentFloor;
+    private Direction direction;
+    private List<Passenger> passengers;
+    private boolean doorOpen;
+    private boolean powerOn;
+    private boolean emergencyLightActivated;
+    private boolean obstructed; // Add obstructed field to simulate obstruction
+    private static final int MAX_WEIGHT = 400; // Maximum weight limit for the elevator
+
+    public Elevator() {
+        currentFloor = 1; // Start from the first floor
+        direction = Direction.NONE; // Initially not moving
+        passengers = new ArrayList<>();
+        doorOpen = false;
+        obstructed = false; // Initially not obstructed
+        powerOn = true; // Assume power is initially on
+        emergencyLightActivated = false;
+    }
+
+    public int getCurrentFloor() {
+        return currentFloor;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public boolean isDoorOpen() {
+        return doorOpen;
+    }
+
+    public void openDoor() {
+        doorOpen = true;
+        System.out.println("Door opened.");
+    }
+
+    public void closeDoor() {
+        doorOpen = false;
+        System.out.println("Door closed.");
+    }
+
+    public boolean isPowerOn() {
+        return powerOn;
+    }
+
+    // Turn off the power
+    public void powerOff() {
+        powerOn = false;
+        System.out.println("Power off.");
+    }
+
+    // Check if the emergency light is activated
+    public boolean isEmergencyLightActivated() {
+        return emergencyLightActivated;
+    }
+
+    public void deactivateEmergencyLight() {
+        emergencyLightActivated = false;
+        System.out.println("Emergency light deactivated.");
+    }
+
+    // Simulate detecting obstruction between closing doors
+    public void obstructionDetected() {
+        obstructed = true;
+        System.out.println("Obstruction detected.");
+    }
+
+    public boolean isObstructed() {
+        return obstructed;
+    }
+
+    public void clearObstruction() {
+        obstructed = false;
+        System.out.println("Obstruction cleared.");
+    }
+
+    public boolean isOverloaded() {
+        // Calculate total weight of passengers
+        int totalWeight = passengers.size() * 80; // Assuming each passenger has a weight of 80kg
+        return totalWeight > MAX_WEIGHT;
+    }
+
+    // Press the floor button
+    public void pressFloorButton(int floorNumber) {
+        System.out.println("Floor " + floorNumber + " selected.");
+    }
+
+    // Check if a floor is selected
+    public boolean isFloorSelected(int floorNumber) {
+        // Dummy implementation for testing purposes
+        return true;
+    }
+
+    // Method to move the elevator to a specified floor
+    public void moveToFloor(int targetFloor) {
+        if (targetFloor > currentFloor) {
+            direction = Direction.UP;
+        } else if (targetFloor < currentFloor) {
+            direction = Direction.DOWN;
+        } else {
+            direction = Direction.NONE;
+        }
+        currentFloor = targetFloor;
+    }
+
+    // Method to add a passenger to the elevator
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
+    }
+
+    // Method to remove a passenger from the elevator
+    public void removePassenger(Passenger passenger) {
+        passengers.remove(passenger);
+    }
+}
+
+// Class representing the building
+class Building {
+    private List<Floor> floors;
+    private Elevator elevator;
+
+    public Building(int numFloors) {
+        floors = new ArrayList<>();
+        for (int i = 1; i <= numFloors; i++) {
+            floors.add(new Floor(i));
+        }
+        elevator = new Elevator();
+    }
+
+    public List<Floor> getFloors() {
+        return floors;
+    }
+
+    public Elevator getElevator() {
+        return elevator;
+    }
+
+    // Simulate fire alarm ringing
+    public void fireAlarmRings() {
+        System.out.println("Fire alarm ringing...");
+    }
+
+    // Simulate communication with building security system to get safe floor
+    public int getSafeFloor() {
+        // Dummy implementation for testing purposes
+        return 1; // Safe floor is assumed to be the first floor
+    }
+}
+
+
+
+
+
